@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>主界面</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://www.jq22.com/jquery/bootstrap-3.3.4.css">
+	<link rel="stylesheet" href="bTabs/btabs/b.tabs.css" type="text/css">
+    <link rel="stylesheet" href="bTabs/css/btabs/header.css" />
+    <link rel="stylesheet" href="bTabs/demo.css" />
+	<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="bTabs/jquery-ui.min.js" ></script>
+	<script src="https://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
+	<!-- 插件核心脚本 -->
+	<script type="text/javascript" src="bTabs/btabs/b.tabs.js" ></script>
+	<script type="text/javascript" src="bTabs/demo.js" ></script>
+	
+	
+	<script>
+	
+	// 在被嵌套时就刷新上级窗口
+	if(window.parent != window){
+		window.parent.location.reload(true);
+		top.document.location.href = "../login.jsp";
+	}
+		
+		//导航区域项目点击增加标签页处理
+		//仅演示功能
+		$('a',$('#menuSideBar')).on('click', function(e) {
+			e.stopPropagation();
+			var li = $(this).closest('li');
+			var menuId = $(li).attr('mid');
+			var url = $(li).attr('funurl');
+			var title = $(this).text();
+			//校验登录是否超时，通常使用ajax访问服务端测试登录是否超时
+			//若页面端已有超时自动跳转的处理，则不需要设置该回调
+			var checkLogin = function(){
+				//....
+			};
+			$('#mainFrameTabs').bTabsAdd(menuId,title,url,checkLogin);
+		});
+
+		//插件的初始化
+		$('#mainFrameTabs').bTabs({
+			//登录界面URL，用于登录超时后的跳转
+			'loginUrl' : 'http://xxx.com/login',
+			//用于初始化主框架的宽度高度等，另外会在窗口尺寸发生改变的时候，也自动进行调整
+			'resize' : function(){
+				//这里只是个样例，具体的情况需要计算
+				//$('#mainFrameTabs').height(100);
+			}
+		});
+	</script>
+	<style>
+		html{width: 100%;height: 100%;}
+		body{width: 100%;height: calc(100% - 0px);}
+		#mainFrameTabs{float: left;margin: 10px 0px; margin-left: 10px;width: calc(100% - 220px);border: 1px solid #999;}
+	</style>
+</head>
+<body style="background: 667764;">
+	<!-- 菜单导航，非必须，具体使用时更换为具体的管件 -->
+<div class="span2" style="width: 200px;float: left;height: 100%;">
+    <div class="well menuSideBar" style="padding: 8px 0px;height: 100%;margin-bottom: 0px;">
+        <ul class="nav nav-list" id="menuSideBar">
+            <li class="nav-header">导航菜单</li>
+            <li class="divider"></li>
+            <li mid="tab1" funurl="ClassesServlet?param=list&PageNo=1"><a tabindex="-1" href="javascript:void(0);">班级信息管理</a></li>
+            <li mid="tab2" funurl="stuServlet?param=list&PageNo=1"><a tabindex="-1" href="javascript:void(0);">学生信息管理</a></li>
+            <li mid="tab3" funurl="TeacherServlet?param=list&PageNo=1"><a tabindex="-1" href="javascript:void(0);">老师信息管理</a></li>
+             <li mid="tab4" funurl="testServlet?param=list&PageNo=1"><a tabindex="-1" href="javascript:void(0);">试卷信息管理</a></li>
+             <li mid="tab5" funurl="PersonServlet?param=find"><a tabindex="-1" href="javascript:void(0);">个人信息</a></li>
+        </ul>
+    </div>
+</div>
+<!-- 标签页区域 -->
+<div class="span10" id="mainFrameTabs">
+ 
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <!-- 设置默认的首页标签页，设置noclose样式，则不会被关闭 -->
+        <li role="presentation" class="active noclose"><a href="#bTabs_navTabsMainPage" data-toggle="tab">首页</a></li>
+    </ul>
+     
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <!-- 默认标签页（首页）的内容区域 -->
+        <div class="tab-pane active" id="bTabs_navTabsMainPage">
+            <div class="page-header">
+                <h2 style="font-size: 50px;text-align: center;font-weight: normal;margin-bottom:20px;">欢迎使用</h2>
+            </div>
+            <div style="text-align: center;font-size: 20px;line-height: 20px;">
+           		<h2><font color="red">在线考试系统后台首页</font></h2>
+            </div>
+        </div>
+    </div>
+ 
+</div>
+
+</body>
+</html>
